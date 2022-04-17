@@ -1,0 +1,15 @@
+type Query {
+  numberSix: Int! # Should always return the number 6 when queried
+  numberSeven: Int! # Should always return 7
+}
+type Mutation {
+    addStudent(newStudent:newStudent):Student
+}
+type Student{
+		name:String!
+		school:String!
+}
+input newStudent{
+		name:String!
+		school:String!
+}
