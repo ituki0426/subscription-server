@@ -1,4 +1,6 @@
-schema: gql/schema/schema.gql
+schema: 
+        - "gql/schema/schema.gql"
+        - scalar Upload
 generates:
   generated/resolvers.ts:
     plugins:

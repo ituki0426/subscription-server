@@ -1,9 +1,10 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -11,16 +12,42 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Upload: any;
+};
+
+export type File = {
+  __typename?: 'File';
+  encoding: Scalars['String'];
+  filename: Scalars['String'];
+  mimetype: Scalars['String'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   addStudent?: Maybe<Student>;
+  signUpedUser: User;
+  singleUpload: File;
+  sourceUpload: Source;
 };
 
 
 export type MutationAddStudentArgs = {
   newStudent?: InputMaybe<NewStudent>;
+};
+
+
+export type MutationSignUpedUserArgs = {
+  newUser: NewUser;
+};
+
+
+export type MutationSingleUploadArgs = {
+  file: Scalars['Upload'];
+};
+
+
+export type MutationSourceUploadArgs = {
+  source: Source;
 };
 
 export type Query = {
@@ -29,15 +56,33 @@ export type Query = {
   numberSix: Scalars['Int'];
 };
 
+export type Source = {
+  __typename?: 'Source';
+  projectName: Scalars['String'];
+  uid: Scalars['ID'];
+  urls?: Maybe<Array<Scalars['String']>>;
+};
+
 export type Student = {
   __typename?: 'Student';
-  name?: Scalars['String'];
-  school?: Scalars['String'];
+  name: Scalars['String'];
+  school: Scalars['String'];
+};
+
+export type User = {
+  __typename?: 'User';
+  email?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  name: Scalars['String'];
 };
 
 export type NewStudent = {
-  name?: Scalars['String'];
-  school?: Scalars['String'];
+  name: Scalars['String'];
+  school: Scalars['String'];
+};
+
+export type NewUser = {
+  name: Scalars['String'];
 };
 
 
@@ -110,32 +155,61 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  File: ResolverTypeWrapper<File>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  Source: ResolverTypeWrapper<Source>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Student: ResolverTypeWrapper<Student>;
+  Upload: ResolverTypeWrapper<Scalars['Upload']>;
+  User: ResolverTypeWrapper<User>;
   newStudent: NewStudent;
+  newUser: NewUser;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
+  File: File;
+  ID: Scalars['ID'];
   Int: Scalars['Int'];
   Mutation: {};
   Query: {};
+  Source: Source;
   String: Scalars['String'];
   Student: Student;
+  Upload: Scalars['Upload'];
+  User: User;
   newStudent: NewStudent;
+  newUser: NewUser;
+};
+
+export type FileResolvers<ContextType = any, ParentType extends ResolversParentTypes['File'] = ResolversParentTypes['File']> = {
+  encoding?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  filename?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mimetype?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addStudent?: Resolver<Maybe<ResolversTypes['Student']>, ParentType, ContextType, Partial<MutationAddStudentArgs>>;
+  signUpedUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSignUpedUserArgs, 'newUser'>>;
+  singleUpload?: Resolver<ResolversTypes['File'], ParentType, ContextType, RequireFields<MutationSingleUploadArgs, 'file'>>;
+  sourceUpload?: Resolver<ResolversTypes['Source'], ParentType, ContextType, RequireFields<MutationSourceUploadArgs, 'source'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   numberSeven?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   numberSix?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+};
+
+export type SourceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Source'] = ResolversParentTypes['Source']> = {
+  projectName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  uid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  urls?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type StudentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Student'] = ResolversParentTypes['Student']> = {
@@ -144,9 +218,24 @@ export type StudentResolvers<ContextType = any, ParentType extends ResolversPare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
+  name: 'Upload';
+}
+
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
+  File?: FileResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Source?: SourceResolvers<ContextType>;
   Student?: StudentResolvers<ContextType>;
+  Upload?: GraphQLScalarType;
+  User?: UserResolvers<ContextType>;
 };
 

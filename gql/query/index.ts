@@ -1,6 +1,13 @@
 import { QueryResolvers } from "../../generated/resolvers";
-export const numberSix:QueryResolvers[`numberSix`]=(
+import { AuthenticationError } from "apollo-server";
+export const numberSix:QueryResolvers[`numberSix`]=async(
+	parent, args, context, info
 )=>{
+	console.log(context.token)
+	//tokenが付与されていないときのエラーハンドリング
+	if(!context.token){
+		throw new AuthenticationError('トークンが付与されていません');
+	}
 	const number=6
 	return number
 }

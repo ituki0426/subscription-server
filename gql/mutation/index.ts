@@ -1,17 +1,43 @@
-import { MutationResolvers } from "../../generated/resolvers"
+import { firebaseConfig } from "../../firebase/fire"
+import { initializeApp } from "firebase-admin"
+import { MutationResolvers, NewUser } from "../../generated/resolvers"
 import { NewStudent } from "../../generated/resolvers"
 import { collections } from "../../db/db"
-export const addStudent:MutationResolvers['addStudent']=async(
+import * as upp from 'graphql-upload'
+import { File } from "../../generated/resolvers"
+import 'firebase/auth'
+import { getAuth } from "firebase-admin/auth"
+import { User } from "../../generated/resolvers"
+import { async } from "@firebase/util"
+import { Auth } from "../../firebase/fire"
+export const singleUpload:MutationResolvers['singleUpload']=(
 	parent,
-    args,
+    args
 )=>{
-	
-	const name:string | undefined=args.newStudent?.name
-	const school:string | undefined=args.newStudent?.school
-	const student:NewStudent={
+	/* @ts-expect-error */
+	return args.file.then(file => {
+        console.log(`📁 File get ${file.filename}`);
+        return file;
+      });
+}
+export const signUpedUser:MutationResolvers[`signUpedUser`]=async(
+	parent, args, context, info
+)=>{
+	const decodeToken=await Auth.verifyIdToken(context.token)
+	const uid=decodeToken.uid
+	const email=decodeToken.email
+	const name=args.newUser.name
+	const newUser:User={
+		email:email,
 		name:name,
-		school:school
+		id:uid
 	}
-	const res=collections.students?.insertOne(student)
-	return student
+	collections.users?.insertOne(newUser)
+	return newUser
+}
+export const sourceUpload:MutationResolvers['sourceUpload']=(
+	parent, args, context, info
+)=>{
+	collections.sources?.insertOne(args.source)
+	return args.source
 }
