@@ -10,16 +10,6 @@ import { getAuth } from "firebase-admin/auth"
 import { User } from "../../generated/resolvers"
 import { async } from "@firebase/util"
 import { Auth } from "../../firebase/fire"
-export const singleUpload:MutationResolvers['singleUpload']=(
-	parent,
-    args
-)=>{
-	/* @ts-expect-error */
-	return args.file.then(file => {
-        console.log(`📁 File get ${file.filename}`);
-        return file;
-      });
-}
 export const signUpedUser:MutationResolvers[`signUpedUser`]=async(
 	parent, args, context, info
 )=>{
