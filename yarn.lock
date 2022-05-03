@@ -978,7 +978,7 @@
     "teeny-request" "^7.1.3"
     "xdg-basedir" "^4.0.0"
 
-"@graphql-codegen/cli@2.6.2":
+"@graphql-codegen/cli@^2.6.2":
   "version" "2.6.2"
   dependencies:
     "@graphql-codegen/core" "2.5.1"
@@ -1053,6 +1053,16 @@
     "@graphql-tools/utils" "^8.1.1"
     "tslib" "~2.3.0"
 
+"@graphql-codegen/typescript-graphql-request@^4.4.5":
+  "integrity" "sha512-D8ao8j43R8pStLqCMXVzdvGX9xc/x+IWd8ZacbKUVKbpWxlO7AEVAF89fgTpPv4FFTYG62BdkElf3ePcvgEWuw=="
+  "resolved" "https://registry.npmjs.org/@graphql-codegen/typescript-graphql-request/-/typescript-graphql-request-4.4.5.tgz"
+  "version" "4.4.5"
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "^2.4.0"
+    "@graphql-codegen/visitor-plugin-common" "2.7.4"
+    "auto-bind" "~4.0.0"
+    "tslib" "~2.3.0"
+
 "@graphql-codegen/typescript-operations@^2.3.5":
   "integrity" "sha512-GCZQW+O+cIF62ioPkQMoSJGzjJhtr7ttZGJOAoN/Q/oolG8ph9jNFePKO67tSQ/POAs5HLqfat4kAlCK8OPV3Q=="
   "resolved" "https://registry.npmjs.org/@graphql-codegen/typescript-operations/-/typescript-operations-2.3.5.tgz"
@@ -1076,7 +1086,7 @@
     "auto-bind" "~4.0.0"
     "tslib" "~2.3.0"
 
-"@graphql-codegen/typescript@^2.4.8", "@graphql-codegen/typescript@2.4.8":
+"@graphql-codegen/typescript@^2.4.8":
   "integrity" "sha512-tVsHIkuyenBany7c5IMU1yi4S1er2hgyXJGNY7PcyhpJMx0eChmbqz1VTiZxDEwi8mDBS2mn3TaSJMh6xuJM5g=="
   "resolved" "https://registry.npmjs.org/@graphql-codegen/typescript/-/typescript-2.4.8.tgz"
   "version" "2.4.8"
@@ -3744,7 +3754,7 @@
   "resolved" "https://registry.npmjs.org/graphql-executor/-/graphql-executor-0.0.22.tgz"
   "version" "0.0.22"
 
-"graphql-request@^4.0.0":
+"graphql-request@^3.4.0 || ^4.0.0", "graphql-request@^4.0.0":
   "integrity" "sha512-uFeMyhhl8ss4LFgjlfPeAn2pqYw+CJto+cjj71uaBYIMMK2jPIqgHm5KEFxUk0YDD41A8Bq31a2b4G2WJBlp2Q=="
   "resolved" "https://registry.npmjs.org/graphql-request/-/graphql-request-4.2.0.tgz"
   "version" "4.2.0"
@@ -3758,7 +3768,7 @@
   "resolved" "https://registry.npmjs.org/graphql-sse/-/graphql-sse-1.1.0.tgz"
   "version" "1.1.0"
 
-"graphql-tag@^2.11.0", "graphql-tag@^2.12.3":
+"graphql-tag@^2.0.0", "graphql-tag@^2.11.0", "graphql-tag@^2.12.3":
   "integrity" "sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg=="
   "resolved" "https://registry.npmjs.org/graphql-tag/-/graphql-tag-2.12.6.tgz"
   "version" "2.12.6"

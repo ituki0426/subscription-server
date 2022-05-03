@@ -1,44 +1,25 @@
-scalar Upload
 
 input newUser{
 		name:String!
 }
 
 type File {
-    filename: String!
-    url:String!
+  "ファイルのパス"
+  path:String!
+  "firebaseのURL"
+  url:String!
 }
 
-type Source{
-  "製作者のuid"
-  uid:ID!
-  "プロジェクト名"
-  projectName:String!
-  "firebaseのurl"
-  urls:[String!]
-}
-"
 type Source{
   uid:ID!
   projectName:String!
   files:[File!]
 }
-"
 
 "ファイルのリクエスト"
 input reqFile{
   uid:ID!
   project:String!
-  root:String!
-}
-"リクエストに対するレスポンス"
-type resFile{
-  files:[String!]
-  folders:[String!]
-}
-
-input  getURL{
-  
 }
 
 type User {
@@ -48,6 +29,7 @@ type User {
 }
 
 type Query {
+  getFIle(req:reqFile!):[File!]
   numberSix: Int! 
   numberSeven: Int! 
 }
@@ -55,13 +37,9 @@ type Query {
 type Mutation {
   addStudent(newStudent:newStudent):Student
   "ユーザのサインアップ"
-	singleUpload(file: Upload!): File!
-
   signUpedUser(newUser:newUser!): User!
   "ソースコードのアップロード"
-  sourceUpload(source:Source!):Source!
-  "ファイルが保存してあるFirebaseのURLを返す"
-  getURL(rea:getURL!):String! 
+  sourceUpload(source:Source!):String!
 }
 
 type Student{

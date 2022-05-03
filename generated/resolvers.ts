@@ -17,17 +17,19 @@ export type Scalars = {
 
 export type File = {
   __typename?: 'File';
-  encoding: Scalars['String'];
-  filename: Scalars['String'];
-  mimetype: Scalars['String'];
+  /** ファイルのパス */
+  path: Scalars['String'];
+  /** firebaseのURL */
+  url: Scalars['String'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   addStudent?: Maybe<Student>;
+  /** ユーザのサインアップ */
   signUpedUser: User;
-  singleUpload: File;
-  sourceUpload: Source;
+  /** ソースコードのアップロード */
+  sourceUpload: Scalars['String'];
 };
 
 
@@ -41,26 +43,27 @@ export type MutationSignUpedUserArgs = {
 };
 
 
-export type MutationSingleUploadArgs = {
-  file: Scalars['Upload'];
-};
-
-
 export type MutationSourceUploadArgs = {
   source: Source;
 };
 
 export type Query = {
   __typename?: 'Query';
+  getFIle?: Maybe<Array<File>>;
   numberSeven: Scalars['Int'];
   numberSix: Scalars['Int'];
 };
 
+
+export type QueryGetFIleArgs = {
+  req: ReqFile;
+};
+
 export type Source = {
   __typename?: 'Source';
+  files?: Maybe<Array<File>>;
   projectName: Scalars['String'];
   uid: Scalars['ID'];
-  urls?: Maybe<Array<Scalars['String']>>;
 };
 
 export type Student = {
@@ -83,6 +86,12 @@ export type NewStudent = {
 
 export type NewUser = {
   name: Scalars['String'];
+};
+
+/** ファイルのリクエスト */
+export type ReqFile = {
+  project: Scalars['String'];
+  uid: Scalars['ID'];
 };
 
 
@@ -167,6 +176,7 @@ export type ResolversTypes = {
   User: ResolverTypeWrapper<User>;
   newStudent: NewStudent;
   newUser: NewUser;
+  reqFile: ReqFile;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -184,31 +194,31 @@ export type ResolversParentTypes = {
   User: User;
   newStudent: NewStudent;
   newUser: NewUser;
+  reqFile: ReqFile;
 };
 
 export type FileResolvers<ContextType = any, ParentType extends ResolversParentTypes['File'] = ResolversParentTypes['File']> = {
-  encoding?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  filename?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  mimetype?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  path?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addStudent?: Resolver<Maybe<ResolversTypes['Student']>, ParentType, ContextType, Partial<MutationAddStudentArgs>>;
   signUpedUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSignUpedUserArgs, 'newUser'>>;
-  singleUpload?: Resolver<ResolversTypes['File'], ParentType, ContextType, RequireFields<MutationSingleUploadArgs, 'file'>>;
-  sourceUpload?: Resolver<ResolversTypes['Source'], ParentType, ContextType, RequireFields<MutationSourceUploadArgs, 'source'>>;
+  sourceUpload?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationSourceUploadArgs, 'source'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  getFIle?: Resolver<Maybe<Array<ResolversTypes['File']>>, ParentType, ContextType, RequireFields<QueryGetFIleArgs, 'req'>>;
   numberSeven?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   numberSix?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 
 export type SourceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Source'] = ResolversParentTypes['Source']> = {
+  files?: Resolver<Maybe<Array<ResolversTypes['File']>>, ParentType, ContextType>;
   projectName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   uid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  urls?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
